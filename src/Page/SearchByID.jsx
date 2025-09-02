@@ -130,7 +130,7 @@ export default function SearchByID() {
                                     <tr>
                                         <th className="px-4 py-2 text-left">PWD Number</th>
                                         <th className="px-4 py-2 text-left">Name</th>
-                                        <th className="px-4 py-2 text-left">Age</th>
+                                        {/* <th className="px-4 py-2 text-left">Age</th> */}
                                         <th className="px-4 py-2 text-left">Disability</th>
                                         {/* <th className="px-4 py-2 text-left">Action</th> */}
                                     </tr>
@@ -150,7 +150,7 @@ export default function SearchByID() {
                                                 <td className="px-4 py-2">
                                                     {r.last}, {r.first} {r.middle}
                                                 </td>
-                                                <td className="px-4 py-2">{r.age}</td>
+                                                {/* <td className="px-4 py-2">{r.age}</td> */}
                                                 <td className="px-4 py-2">{r.disability}</td>
                                                 {/* <td className="px-4 py-2">
                                                     <button
