@@ -5,7 +5,8 @@ import { ArrowLeft } from "lucide-react";
 export default function Search_name() {
     const SheetURL = import.meta.env.VITE_SheetURL;
     const [data, setData] = useState([]);
-    const [query, setQuery] = useState("");
+    const [firstQuery, setFirstQuery] = useState("");
+    const [lastQuery, setLastQuery] = useState("");
     const [results, setResults] = useState([]);
     const [searched, setSearched] = useState(false);
     const navigate = useNavigate();
@@ -14,23 +15,14 @@ export default function Search_name() {
     const getAge = (value) => {
         if (!value) return "Missing";
         const match = /Date\((\d+),(\d+),(\d+)\)/.exec(value);
-        let birthDate;
-        if (match) {
-            birthDate = new Date(
-                parseInt(match[1]),
-                parseInt(match[2]),
-                parseInt(match[3])
-            );
-        } else {
-            birthDate = new Date(value);
-        }
+        let birthDate = match
+            ? new Date(parseInt(match[1]), parseInt(match[2]), parseInt(match[3]))
+            : new Date(value);
         if (isNaN(birthDate)) return "Missing";
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
         const m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
         return age;
     };
 
@@ -38,12 +30,9 @@ export default function Search_name() {
     const formatDate = (value) => {
         if (!value) return "Missing";
         const match = /Date\((\d+),(\d+),(\d+)\)/.exec(value);
-        let d;
-        if (match) {
-            d = new Date(parseInt(match[1]), parseInt(match[2]), parseInt(match[3]));
-        } else {
-            d = new Date(value);
-        }
+        let d = match
+            ? new Date(parseInt(match[1]), parseInt(match[2]), parseInt(match[3]))
+            : new Date(value);
         if (isNaN(d)) return value;
         return new Intl.DateTimeFormat("en-US", {
             year: "numeric",
@@ -54,8 +43,7 @@ export default function Search_name() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const url = SheetURL;
-            const res = await fetch(url);
+            const res = await fetch(SheetURL);
             const text = await res.text();
             const json = JSON.parse(text.substr(47).slice(0, -2));
 
@@ -64,6 +52,7 @@ export default function Search_name() {
                 last: r.c[3]?.v || "Missing",
                 first: r.c[4]?.v || "Missing",
                 middle: r.c[5]?.v || "Missing",
+                FullName: r.c[26]?.v || "",
                 address: r.c[6]?.v || "Missing",
                 birthday: formatDate(r.c[7]?.v),
                 age: getAge(r.c[7]?.v),
@@ -83,34 +72,38 @@ export default function Search_name() {
     }, []);
 
     const handleSearch = () => {
-        const q = query.toLowerCase().trim();
-        if (!q) {
-            alert("⚠️ Please enter a name before searching.");
+        const first = firstQuery.toLowerCase().trim();
+        const last = lastQuery.toLowerCase().trim();
+
+        if (!first || !last) {
+            alert("⚠️ Please enter both first and last name.");
             return;
         }
+
         setSearched(true);
 
         const filtered = data.filter((row) => {
-            const first = row.first.toLowerCase();
-            const middle = row.middle.toLowerCase();
-            const last = row.last.toLowerCase();
+            const fWords = (row.first || "").toLowerCase().trim().split(/\s+/);
+            const lWords = (row.last || "").toLowerCase().trim().split(/\s+/);
 
-            const combos = [
-                `${first} ${middle} ${last}`,
-                `${first} ${last}`,
-                `${last} ${first} ${middle}`,
-                `${last} ${first}`,
-                `${first} ${middle}`,
-                `${first}`,
-                `${last}`,
-                `${middle}`,
-            ].map((s) => s.replace(/\s+/g, " ").trim());
+            const queryFirstWords = first.split(/\s+/).filter(w => w.length >= 2);
+            const queryLastWords = last.split(/\s+/).filter(w => w.length >= 2);
 
-            return combos.some((name) => name.includes(q));
+            const firstMatch = queryFirstWords.every(qw =>
+                fWords.some(word => word.startsWith(qw))
+            );
+
+            const lastMatch = queryLastWords.every(qw =>
+                lWords.some(word => word.startsWith(qw))
+            );
+
+            return firstMatch && lastMatch;
         });
 
         setResults(filtered);
     };
+
+
 
     return (
         <div className="min-h-screen bg-gray-100 text-gray-900 p-4 flex flex-col items-center">
@@ -128,24 +121,42 @@ export default function Search_name() {
                     Search By Name
                 </h1>
 
-                <div className="flex flex-col sm:flex-row gap-3 w-full">
+                <form
+                    className="flex flex-col sm:flex-row gap-3 w-full"
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSearch();
+                    }}
+                >
                     <input
                         type="text"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Type a name..."
+                        value={firstQuery}
+                        onChange={(e) => setFirstQuery(e.target.value)}
+                        placeholder="First Name"
+                        required
+                        minLength={2} // optional: enforce at least 2 chars
+                        className="flex-1 px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <input
+                        type="text"
+                        value={lastQuery}
+                        onChange={(e) => setLastQuery(e.target.value)}
+                        placeholder="Last Name"
+                        required
+                        minLength={2} // optional
                         className="flex-1 px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <button
-                        onClick={handleSearch}
+                        type="submit"
                         className="px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 rounded-xl font-semibold shadow-md w-full sm:w-auto"
                     >
                         Search
                     </button>
-                </div>
+                </form>
+
                 <p className="text-sm text-gray-500 text-center mt-2">
                     Example:{" "}
-                    <span className="text-blue-600 font-medium">john delacruz</span>
+                    <span className="text-blue-600 font-medium">John Delacruz</span>
                 </p>
 
                 {searched && (
@@ -157,35 +168,18 @@ export default function Search_name() {
                                         <th className="px-4 py-2 text-left">Last Name</th>
                                         <th className="px-4 py-2 text-left">First Name</th>
                                         <th className="px-4 py-2 text-left">Middle</th>
-                                        {/* <th className="px-4 py-2 text-left">Action</th> */}
                                     </tr>
                                 </thead>
                             </table>
 
-                            {/* Scrollable tbody */}
                             <div className="max-h-64 overflow-y-auto">
                                 <table className="w-full text-sm sm:text-base">
                                     <tbody>
                                         {results.map((r) => (
-                                            <tr
-                                                key={r.id}
-                                                className="odd:bg-white even:bg-gray-50"
-                                            >
+                                            <tr key={r.id} className="odd:bg-white even:bg-gray-50">
                                                 <td className="px-4 py-2">{r.last}</td>
                                                 <td className="px-4 py-2">{r.first}</td>
                                                 <td className="px-4 py-2">{r.middle}</td>
-                                                {/* <td className="px-4 py-2">
-                                                    <button
-                                                        onClick={() =>
-                                                            navigate(`/details/${r.id}`, {
-                                                                state: r,
-                                                            })
-                                                        }
-                                                        className="text-blue-600 hover:underline"
-                                                    >
-                                                        View Details
-                                                    </button>
-                                                </td> */}
                                             </tr>
                                         ))}
                                     </tbody>
@@ -195,12 +189,9 @@ export default function Search_name() {
                     </div>
                 )}
 
-                {/* No Results */}
                 {searched && results.length === 0 && (
                     <div className="mt-6 text-center">
-                        <p className="text-red-500 font-medium text-lg">
-                            No results found
-                        </p>
+                        <p className="text-red-500 font-medium text-lg">No results found</p>
                         <a
                             href="https://forms.gle/KXwjZj8VcfW9e5ck8"
                             target="_blank"
