@@ -132,7 +132,7 @@ export default function SearchByID() {
                                         <th className="px-4 py-2 text-left">Name</th>
                                         <th className="px-4 py-2 text-left">Age</th>
                                         <th className="px-4 py-2 text-left">Disability</th>
-                                        <th className="px-4 py-2 text-left">Action</th>
+                                        {/* <th className="px-4 py-2 text-left">Action</th> */}
                                     </tr>
                                 </thead>
                             </table>
@@ -152,7 +152,7 @@ export default function SearchByID() {
                                                 </td>
                                                 <td className="px-4 py-2">{r.age}</td>
                                                 <td className="px-4 py-2">{r.disability}</td>
-                                                <td className="px-4 py-2">
+                                                {/* <td className="px-4 py-2">
                                                     <button
                                                         onClick={() =>
                                                             navigate(`/details/${r.id}`, {
@@ -163,7 +163,7 @@ export default function SearchByID() {
                                                     >
                                                         View Details
                                                     </button>
-                                                </td>
+                                                </td> */}
                                             </tr>
                                         ))}
                                     </tbody>
