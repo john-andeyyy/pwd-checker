@@ -125,7 +125,7 @@ export default function Search_name() {
 
             <div className="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-6">
                 <h1 className="text-2xl font-bold mb-4 text-center text-blue-700">
-                    Search PWD List
+                    Search By Name
                 </h1>
 
                 <div className="flex flex-col sm:flex-row gap-3 w-full">
