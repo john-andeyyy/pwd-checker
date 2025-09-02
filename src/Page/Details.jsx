@@ -34,13 +34,13 @@ export default function Details() {
     const details = [
         { label: "Birthday", value: state.birthday, icon: Calendar, color: "text-blue-500" },
         { label: "Age", value: `${state.age} years old`, icon: User, color: "text-green-500" },
-        { label: "Cellphone", value: state.cellphone, icon: Phone, color: "text-yellow-500" },
+        { label: "Cellphone Number", value: state.cellphone, icon: Phone, color: "text-yellow-500" },
         { label: "Disability", value: state.disability, icon: Activity, color: "text-red-500" },
         { label: "Address", value: state.address, icon: MapPin, color: "text-purple-500" },
         { label: "PWD Number", value: state.pwdNumber, icon: IdCard, color: "text-indigo-500" },
         { label: "Date Issued", value: state.dateIssued, icon: FileText, color: "text-pink-500" },
         { label: "Bedridden", value: state.bedridden, icon: Activity, color: "text-orange-500" },
-        { label: "Status", value: state.status, icon: Heart, color: "text-pink-600" },
+        // { label: "Status", value: state.status, icon: Heart, color: "text-pink-600" },
         { label: "Civil Status", value: state.civilStatus, icon: User, color: "text-cyan-500" },
     ];
 
@@ -48,7 +48,7 @@ export default function Details() {
         <div className="min-h-screen bg-gray-100 text-gray-900 p-6">
             {/* Back Button */}
             <button
-                onClick={() => navigate("/search-name")}
+                onClick={() => navigate(-1)}
                 className="mb-6 flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium shadow"
             >
                 <ArrowLeft size={18} /> Back
@@ -63,7 +63,7 @@ export default function Details() {
             </div>
 
             {/* Details Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-h-96 overflow-y-auto md:max-h-none md:overflow-visible pb-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-h-96 overflow-y-auto md:max-h-none md:overflow-visible pb-6 capitalize">
                 {details.map(({ label, value, icon: Icon, color }, idx) => (
                     <div
                         key={idx}

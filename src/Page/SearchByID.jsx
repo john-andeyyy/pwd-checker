@@ -9,35 +9,33 @@ export default function SearchByID() {
     const [results, setResults] = useState([]);
     const [searched, setSearched] = useState(false);
     const navigate = useNavigate();
-    
-    const formatDate = (dateValue) => {
-        if (!dateValue) return "Missing";
-        try {
-            const d = new Date(dateValue);
-            return d.toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-            });
-        } catch {
-            return "Invalid Date";
-        }
+
+    const formatDate = (value) => {
+        if (!value) return "No Record";
+        const match = /Date\((\d+),(\d+),(\d+)\)/.exec(value);
+        let d = match
+            ? new Date(parseInt(match[1]), parseInt(match[2]), parseInt(match[3]))
+            : new Date(value);
+        if (isNaN(d)) return value;
+        return new Intl.DateTimeFormat("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        }).format(d);
     };
 
-    const getAge = (dateValue) => {
-        if (!dateValue) return "Missing";
-        try {
-            const birthDate = new Date(dateValue);
-            const today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const m = today.getMonth() - birthDate.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            return age;
-        } catch {
-            return "N/A";
-        }
+    const getAge = (value) => {
+        if (!value) return "No Record";
+        const match = /Date\((\d+),(\d+),(\d+)\)/.exec(value);
+        let birthDate = match
+            ? new Date(parseInt(match[1]), parseInt(match[2]), parseInt(match[3]))
+            : new Date(value);
+        if (isNaN(birthDate)) return "No Record";
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+        return age;
     };
 
     useEffect(() => {
@@ -49,20 +47,20 @@ export default function SearchByID() {
 
             const rows = json.table.rows.map((r, i) => ({
                 id: i,
-                last: r.c[3]?.v || "Missing",
-                first: r.c[4]?.v || "Missing",
-                middle: r.c[5]?.v || "Missing",
-                address: r.c[6]?.v || "Missing",
+                last: r.c[3]?.v || "No Record",
+                first: r.c[4]?.v || "No Record",
+                middle: r.c[5]?.v || "No Record",
+                address: r.c[6]?.v || "No Record",
                 birthday: formatDate(r.c[7]?.v),
                 age: getAge(r.c[7]?.v),
-                cellphone: r.c[9]?.v || "Missing",
-                disability: r.c[10]?.v || "Missing",
-                pwdNumber: r.c[11]?.v || "Missing",
+                cellphone: r.c[9]?.v || "No Record",
+                disability: r.c[10]?.v || "No Record",
+                pwdNumber: r.c[11]?.v || "No Record",
                 dateIssued: formatDate(r.c[12]?.v),
-                bedridden: r.c[13]?.v || "Missing",
-                status: r.c[14]?.v || "Missing",
-                civilStatus: r.c[15]?.v || "Missing",
-                notes: r.c[16]?.v || "Missing",
+                bedridden: r.c[13]?.v || "No Record",
+                status: r.c[14]?.v || "No Record",
+                civilStatus: r.c[15]?.v || "No Record",
+                notes: r.c[16]?.v || "No Record",
             }));
 
             setData(rows);
@@ -132,7 +130,7 @@ export default function SearchByID() {
                                         <th className="px-4 py-2 text-left">Name</th>
                                         {/* <th className="px-4 py-2 text-left">Age</th> */}
                                         <th className="px-4 py-2 text-left">Disability</th>
-                                        {/* <th className="px-4 py-2 text-left">Action</th> */}
+                                        <th className="px-4 py-2 text-left">Action</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -152,7 +150,7 @@ export default function SearchByID() {
                                                 </td>
                                                 {/* <td className="px-4 py-2">{r.age}</td> */}
                                                 <td className="px-4 py-2">{r.disability}</td>
-                                                {/* <td className="px-4 py-2">
+                                                <td className="px-4 py-2">
                                                     <button
                                                         onClick={() =>
                                                             navigate(`/details/${r.id}`, {
@@ -163,7 +161,7 @@ export default function SearchByID() {
                                                     >
                                                         View Details
                                                     </button>
-                                                </td> */}
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -179,14 +177,14 @@ export default function SearchByID() {
                         <p className="text-red-500 font-medium text-lg">
                             No results found
                         </p>
-                        <a
+                        {/* <a
                             href="https://forms.gle/KXwjZj8VcfW9e5ck8"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-block mt-3 text-blue-600 hover:underline text-lg"
                         >
                             Do you want to register?
-                        </a>
+                        </a> */}
                     </div>
                 )}
             </div>

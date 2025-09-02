@@ -13,12 +13,12 @@ export default function Search_name() {
 
     // Compute age
     const getAge = (value) => {
-        if (!value) return "Missing";
+        if (!value) return "No Record";
         const match = /Date\((\d+),(\d+),(\d+)\)/.exec(value);
         let birthDate = match
             ? new Date(parseInt(match[1]), parseInt(match[2]), parseInt(match[3]))
             : new Date(value);
-        if (isNaN(birthDate)) return "Missing";
+        if (isNaN(birthDate)) return "No Record";
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
         const m = today.getMonth() - birthDate.getMonth();
@@ -28,7 +28,7 @@ export default function Search_name() {
 
     // Format Google Sheets Date
     const formatDate = (value) => {
-        if (!value) return "Missing";
+        if (!value) return "No Record";
         const match = /Date\((\d+),(\d+),(\d+)\)/.exec(value);
         let d = match
             ? new Date(parseInt(match[1]), parseInt(match[2]), parseInt(match[3]))
@@ -49,21 +49,21 @@ export default function Search_name() {
 
             const rows = json.table.rows.map((r, i) => ({
                 id: i,
-                last: r.c[3]?.v || "Missing",
-                first: r.c[4]?.v || "Missing",
-                middle: r.c[5]?.v || "Missing",
+                last: r.c[3]?.v || "No Record",
+                first: r.c[4]?.v || "No Record",
+                middle: r.c[5]?.v || "No Record",
                 FullName: r.c[26]?.v || "",
-                address: r.c[6]?.v || "Missing",
+                address: r.c[6]?.v || "No Record",
                 birthday: formatDate(r.c[7]?.v),
                 age: getAge(r.c[7]?.v),
-                cellphone: r.c[9]?.v || "Missing",
-                disability: r.c[10]?.v || "Missing",
-                pwdNumber: r.c[11]?.v || "Missing",
+                cellphone: r.c[9]?.v || "No Record",
+                disability: r.c[10]?.v || "No Record",
+                pwdNumber: r.c[11]?.v || "No Record",
                 dateIssued: formatDate(r.c[12]?.v),
-                bedridden: r.c[13]?.v || "Missing",
-                status: r.c[14]?.v || "Missing",
-                civilStatus: r.c[15]?.v || "Missing",
-                notes: r.c[16]?.v || "Missing",
+                bedridden: r.c[13]?.v || "No Record",
+                status: r.c[14]?.v || "No Record",
+                civilStatus: r.c[15]?.v || "No Record",
+                notes: r.c[16]?.v || "No Record",
             }));
 
             setData(rows);
@@ -168,7 +168,7 @@ export default function Search_name() {
                                         <th className="px-4 py-2 text-left">Last Name</th>
                                         <th className="px-4 py-2 text-left">First Name</th>
                                         <th className="px-4 py-2 text-left">Middle</th>
-                                        {/* <th className="px-4 py-2 text-left">Action</th> */}
+                                        <th className="px-4 py-2 text-left">Action</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -181,7 +181,7 @@ export default function Search_name() {
                                                 <td className="px-4 py-2">{r.last}</td>
                                                 <td className="px-4 py-2">{r.first}</td>
                                                 <td className="px-4 py-2">{r.middle}</td>
-                                                {/* <td className="px-4 py-2">
+                                                <td className="px-4 py-2">
                                                     <button
                                                         onClick={() =>
                                                             navigate(`/details/${r.id}`, {
@@ -192,7 +192,7 @@ export default function Search_name() {
                                                     >
                                                         View Details
                                                     </button>
-                                                </td> */}
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -205,14 +205,14 @@ export default function Search_name() {
                 {searched && results.length === 0 && (
                     <div className="mt-6 text-center">
                         <p className="text-red-500 font-medium text-lg">No results found</p>
-                        <a
+                        {/* <a
                             href="https://forms.gle/KXwjZj8VcfW9e5ck8"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-block mt-3 text-blue-600 hover:underline text-lg"
                         >
                             Do you want to register?
-                        </a>
+                        </a> */}
                     </div>
                 )}
             </div>
