@@ -1,4 +1,4 @@
-# React Name Search App
+# PWD Search & Info Portal
 
 A simple React app that allows users to search names from a Google Sheets database. Built with React, Vite, Tailwind CSS, and React Router, this app supports detailed searches using first and last names.
 
