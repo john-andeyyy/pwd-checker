@@ -168,6 +168,7 @@ export default function Search_name() {
                                         <th className="px-4 py-2 text-left">Last Name</th>
                                         <th className="px-4 py-2 text-left">First Name</th>
                                         <th className="px-4 py-2 text-left">Middle</th>
+                                        {/* <th className="px-4 py-2 text-left">Action</th> */}
                                     </tr>
                                 </thead>
                             </table>
@@ -180,6 +181,18 @@ export default function Search_name() {
                                                 <td className="px-4 py-2">{r.last}</td>
                                                 <td className="px-4 py-2">{r.first}</td>
                                                 <td className="px-4 py-2">{r.middle}</td>
+                                                {/* <td className="px-4 py-2">
+                                                    <button
+                                                        onClick={() =>
+                                                            navigate(`/details/${r.id}`, {
+                                                                state: r,
+                                                            })
+                                                        }
+                                                        className="text-blue-600 hover:underline"
+                                                    >
+                                                        View Details
+                                                    </button>
+                                                </td> */}
                                             </tr>
                                         ))}
                                     </tbody>
