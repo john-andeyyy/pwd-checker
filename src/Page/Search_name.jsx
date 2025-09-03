@@ -195,25 +195,19 @@ export default function Search_name() {
                         <div className="w-full mt-6">
                             {results.length > 0 ? (
                                 <div className="overflow-hidden border border-gray-200 rounded-xl">
-                                    <table className="w-full text-sm sm:text-base">
-                                        <thead className="bg-blue-100 sticky top-0 z-10">
-                                            <tr>
-                                                <th className="px-4 py-2 text-left">Last Name</th>
-                                                <th className="px-4 py-2 text-left">First Name</th>
-                                                <th className="px-4 py-2 text-left">Middle</th>
-                                                <th className="px-4 py-2 text-left">Action</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-
                                     <div className="max-h-64 overflow-y-auto">
-                                        <table className="w-full text-sm sm:text-base">
+                                        <table className="w-full text-sm sm:text-base border-collapse">
+                                            <thead className="bg-blue-100 sticky top-0 z-10">
+                                                <tr>
+                                                    <th className="px-4 py-2 text-left">Last Name</th>
+                                                    <th className="px-4 py-2 text-left">First Name</th>
+                                                    <th className="px-4 py-2 text-left">Middle</th>
+                                                    <th className="px-4 py-2 text-left">Action</th>
+                                                </tr>
+                                            </thead>
                                             <tbody>
                                                 {results.map((r) => (
-                                                    <tr
-                                                        key={r.id}
-                                                        className="odd:bg-white even:bg-gray-50"
-                                                    >
+                                                    <tr key={r.id} className="odd:bg-white even:bg-gray-50">
                                                         <td className="px-4 py-2">{r.last}</td>
                                                         <td className="px-4 py-2">{r.first}</td>
                                                         <td className="px-4 py-2">{r.middle}</td>
@@ -235,13 +229,12 @@ export default function Search_name() {
                                 </div>
                             ) : (
                                 <div className="mt-6 text-center">
-                                    <p className="text-red-500 font-medium text-lg">
-                                        No results found
-                                    </p>
+                                    <p className="text-red-500 font-medium text-lg">No results found</p>
                                 </div>
                             )}
                         </div>
                     )}
+
                 </div>
             </div>
         </div>
