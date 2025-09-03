@@ -85,16 +85,16 @@ export default function SearchByID() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 text-gray-900 p-4 flex flex-col items-center">
+        <div className="min-h-[90vh] bg-gradient-to-r from-blue-200 to-cyan-200 text-gray-900 p-4 flex flex-col items-center">
             {/* Back Button */}
-            <div className="w-full flex justify-start mb-6">
-                <button
-                    onClick={() => navigate("/")}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-xl font-medium shadow-md"
-                >
-                    <ArrowLeft size={18} /> Back
-                </button>
-            </div>
+            <div className="w-full max-w-3xl flex mb-4">
+                    <button
+                        onClick={() => navigate("/")}
+                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-xl font-medium shadow-md"
+                    >
+                        <ArrowLeft size={18} /> Back
+                    </button>
+                </div>
 
             {/* Card */}
             <div className="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-6">

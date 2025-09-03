@@ -6,6 +6,7 @@ import Search_name from "./Page/Search_name";
 import SearchByID from "./Page/SearchByID";
 import Navigation from "./Components/Navigation";
 import WelcomeLoader from "./Components/WelcomeLoader";
+import Officer from "./Page/Officer";
 
 const EXPIRE_DAYS = 1;
 
@@ -31,14 +32,15 @@ function App() {
 
   return (
     <Router>
-      <div className="h-screen flex flex-col bg-white">
+      <div className="">
         <Navigation />
-        <main className="flex-1 overflow-hidden pt-20">
+        <main className="">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/search-name" element={<Search_name />} />
             <Route path="/details/:id" element={<Details />} />
             <Route path="/SearchByID" element={<SearchByID />} />
+            <Route path="/Officer" element={<Officer />} />
           </Routes>
         </main>
       </div>

@@ -86,15 +86,15 @@ export default function Search_name() {
             const fWords = (row.first || "").toLowerCase().trim().split(/\s+/);
             const lWords = (row.last || "").toLowerCase().trim().split(/\s+/);
 
-            const queryFirstWords = first.split(/\s+/).filter(w => w.length >= 2);
-            const queryLastWords = last.split(/\s+/).filter(w => w.length >= 2);
+            const queryFirstWords = first.split(/\s+/).filter((w) => w.length >= 2);
+            const queryLastWords = last.split(/\s+/).filter((w) => w.length >= 2);
 
-            const firstMatch = queryFirstWords.every(qw =>
-                fWords.some(word => word.startsWith(qw))
+            const firstMatch = queryFirstWords.every((qw) =>
+                fWords.some((word) => word.startsWith(qw))
             );
 
-            const lastMatch = queryLastWords.every(qw =>
-                lWords.some(word => word.startsWith(qw))
+            const lastMatch = queryLastWords.every((qw) =>
+                lWords.some((word) => word.startsWith(qw))
             );
 
             return firstMatch && lastMatch;
@@ -104,117 +104,145 @@ export default function Search_name() {
     };
 
 
-
     return (
-        <div className="min-h-screen bg-gray-100 text-gray-900 p-4 flex flex-col items-center">
-            <div className="w-full flex justify-start mb-6">
-                <button
-                    onClick={() => navigate("/")}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-xl font-medium shadow-md"
-                >
-                    <ArrowLeft size={18} /> Back
-                </button>
-            </div>
+        <div className="relative min-h-[90vh] flex flex-col bg-gradient-to-r from-blue-200 to-cyan-200" >
 
-            <div className="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-6">
-                <h1 className="text-2xl font-bold mb-4 text-center text-blue-700">
-                    Search By Name
-                </h1>
-
-                <form
-                    className="flex flex-col sm:flex-row gap-3 w-full"
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        handleSearch();
-                    }}
-                >
-                    <input
-                        type="text"
-                        value={firstQuery}
-                        onChange={(e) => setFirstQuery(e.target.value)}
-                        placeholder="First Name"
-                        required
-                        minLength={2} // optional: enforce at least 2 chars
-                        className="flex-1 px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <input
-                        type="text"
-                        value={lastQuery}
-                        onChange={(e) => setLastQuery(e.target.value)}
-                        placeholder="Last Name"
-                        required
-                        minLength={2} // optional
-                        className="flex-1 px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
+            <div className="relative z-10 flex-1 p-4 flex flex-col items-center">
+                <div className="w-full max-w-3xl flex mb-4">
                     <button
-                        type="submit"
-                        className="px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 rounded-xl font-semibold shadow-md w-full sm:w-auto"
+                        onClick={() => navigate("/")}
+                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-xl font-medium shadow-md"
                     >
-                        Search
+                        <ArrowLeft size={18} /> Back
                     </button>
-                </form>
+                </div>
 
-                <p className="text-sm text-gray-500 text-center mt-2">
-                    Example:{" "}
-                    <span className="text-blue-600 font-medium">John Delacruz</span>
-                </p>
+                <div className="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-6">
+                    <h1 className="text-2xl font-bold mb-4 text-center text-blue-700">
+                        Search By Name
+                    </h1>
 
-                {searched && (
-                    <div className="w-full mt-6">
-                        <div className="overflow-x-auto border border-gray-200 rounded-xl">
-                            <table className="w-full text-sm sm:text-base">
-                                <thead className="bg-blue-100 sticky top-0 z-10">
-                                    <tr>
-                                        <th className="px-4 py-2 text-left">Last Name</th>
-                                        <th className="px-4 py-2 text-left">First Name</th>
-                                        <th className="px-4 py-2 text-left">Middle</th>
-                                        <th className="px-4 py-2 text-left">Action</th>
-                                    </tr>
-                                </thead>
-                            </table>
-
-                            <div className="max-h-64 overflow-y-auto">
-                                <table className="w-full text-sm sm:text-base">
-                                    <tbody>
-                                        {results.map((r) => (
-                                            <tr key={r.id} className="odd:bg-white even:bg-gray-50">
-                                                <td className="px-4 py-2">{r.last}</td>
-                                                <td className="px-4 py-2">{r.first}</td>
-                                                <td className="px-4 py-2">{r.middle}</td>
-                                                <td className="px-4 py-2">
-                                                    <button
-                                                        onClick={() =>
-                                                            navigate(`/details/${r.id}`, {
-                                                                state: r,
-                                                            })
-                                                        }
-                                                        className="text-blue-600 hover:underline"
-                                                    >
-                                                        View Details
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                    <form
+                        className="flex flex-col sm:flex-row gap-3 w-full"
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            handleSearch();
+                        }}
+                    >
+                        {/* First Name */}
+                        <div className="flex-1 flex flex-col">
+                            <label
+                                htmlFor="firstName"
+                                className="mb-1 text-sm font-medium text-gray-700"
+                            >
+                                First Name
+                            </label>
+                            <input
+                                id="firstName"
+                                type="text"
+                                value={firstQuery}
+                                onChange={(e) => setFirstQuery(e.target.value)}
+                                placeholder="Enter first name"
+                                required
+                                minLength={2}
+                                className="px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 
+                 text-gray-900 placeholder-gray-500 focus:outline-none 
+                 focus:ring-2 focus:ring-blue-500"
+                            />
                         </div>
-                    </div>
-                )}
 
-                {searched && results.length === 0 && (
-                    <div className="mt-6 text-center">
-                        <p className="text-red-500 font-medium text-lg">No results found</p>
-                        {/* <a
-                            href="https://forms.gle/KXwjZj8VcfW9e5ck8"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block mt-3 text-blue-600 hover:underline text-lg"
-                        >
-                            Do you want to register?
-                        </a> */}
-                    </div>
-                )}
+                        {/* Last Name */}
+                        <div className="flex-1 flex flex-col">
+                            <label
+                                htmlFor="lastName"
+                                className="mb-1 text-sm font-medium text-gray-700"
+                            >
+                                Last Name
+                            </label>
+                            <input
+                                id="lastName"
+                                type="text"
+                                value={lastQuery}
+                                onChange={(e) => setLastQuery(e.target.value)}
+                                placeholder="Enter last name"
+                                required
+                                minLength={2}
+                                className="px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 
+                 text-gray-900 placeholder-gray-500 focus:outline-none 
+                 focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        {/* Search Button */}
+                        <div className="flex items-end">
+                            <button
+                                type="submit"
+                                className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 
+                 rounded-xl font-semibold shadow-md transition"
+                            >
+                                Search
+                            </button>
+                        </div>
+                    </form>
+
+
+                    <p className="text-sm text-gray-500 text-center mt-2">
+                        Example: <span className="text-blue-600 font-medium">John Delacruz</span>
+                    </p>
+
+                    {/* Results */}
+                    {searched && (
+                        <div className="w-full mt-6">
+                            {results.length > 0 ? (
+                                <div className="overflow-hidden border border-gray-200 rounded-xl">
+                                    <table className="w-full text-sm sm:text-base">
+                                        <thead className="bg-blue-100 sticky top-0 z-10">
+                                            <tr>
+                                                <th className="px-4 py-2 text-left">Last Name</th>
+                                                <th className="px-4 py-2 text-left">First Name</th>
+                                                <th className="px-4 py-2 text-left">Middle</th>
+                                                <th className="px-4 py-2 text-left">Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+
+                                    <div className="max-h-64 overflow-y-auto">
+                                        <table className="w-full text-sm sm:text-base">
+                                            <tbody>
+                                                {results.map((r) => (
+                                                    <tr
+                                                        key={r.id}
+                                                        className="odd:bg-white even:bg-gray-50"
+                                                    >
+                                                        <td className="px-4 py-2">{r.last}</td>
+                                                        <td className="px-4 py-2">{r.first}</td>
+                                                        <td className="px-4 py-2">{r.middle}</td>
+                                                        <td className="px-4 py-2">
+                                                            <button
+                                                                onClick={() =>
+                                                                    navigate(`/details/${r.id}`, { state: r })
+                                                                }
+                                                                className="text-blue-600 hover:underline"
+                                                            >
+                                                                View Details
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="mt-6 text-center">
+                                    <p className="text-red-500 font-medium text-lg">
+                                        No results found
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
