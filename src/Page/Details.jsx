@@ -31,7 +31,12 @@ export default function Details() {
 
     const details = [
         { label: "Birthday", value: state.birthday, icon: Calendar, color: "text-blue-500" },
-        { label: "Age", value: `${state.age} years old`, icon: User, color: "text-green-600" },
+        {
+            label: "Age",
+            value: state.age === "No Record" ? "No Record" : `${state.age} years old`,
+            icon: User,
+            color: "text-green-600"
+        },
         { label: "Cellphone Number", value: state.cellphone, icon: Phone, color: "text-yellow-600" },
         { label: "Disability", value: state.disability, icon: Activity, color: "text-red-600" },
         { label: "Address", value: state.address, icon: MapPin, color: "text-purple-600" },
@@ -40,6 +45,7 @@ export default function Details() {
         { label: "Bedridden", value: state.bedridden, icon: Activity, color: "text-orange-600" },
         { label: "Civil Status", value: state.civilStatus, icon: User, color: "text-cyan-600" },
     ];
+    const sanitizedPWD = state.pwdNumber ? state.pwdNumber.replace(/-/g, "") : "";
 
     return (
         <div className="min-h-[90vh] bg-gradient-to-r from-blue-200 to-cyan-200 text-gray-900 p-4 sm:p-6 flex flex-col">
@@ -75,9 +81,22 @@ export default function Details() {
                                 <p className="text-base md:text-lg font-semibold break-words">
                                     {value || "No Record"}
                                 </p>
+
+                                {/* {label === "PWD Number" && value && value !== "No Record" && (
+                                    <a
+                                        href={`https://pwd.doh.gov.ph/tbl_pwd_id_verificationlist.php?csrf_token=ca91b390ea683149b73ba2f9dddd18f295fa5645fc54c667ff469187772f4142&cmd=search&t=tbl_pwd_id_verification&z_pwd_id_number=%3D&x_pwd_id_number=${value.replace(/-/g, "")}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="mt-2 inline-block px-3 py-1 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700"
+                                    >
+                                        Open Record
+                                    </a>
+                                )} */}
+
                             </div>
                         </div>
                     ))}
+
                 </div>
             </div>
         </div>
