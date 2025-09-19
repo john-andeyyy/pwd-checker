@@ -82,16 +82,16 @@ export default function Details() {
                                     {value || "No Record"}
                                 </p>
 
-                                {/* {label === "PWD Number" && value && value !== "No Record" && (
+                                {label === "PWD Number" && value && value !== "No Record" && (
                                     <a
-                                        href={`https://pwd.doh.gov.ph/tbl_pwd_id_verificationlist.php?csrf_token=ca91b390ea683149b73ba2f9dddd18f295fa5645fc54c667ff469187772f4142&cmd=search&t=tbl_pwd_id_verification&z_pwd_id_number=%3D&x_pwd_id_number=${value.replace(/-/g, "")}`}
+                                        href={`https://pwd.doh.gov.ph/tbl_pwd_id_verificationlist.php?csrf_token=ca91b390ea683149b73ba2f9dddd18f295fa5645fc54c667ff469187772f4142&cmd=search&t=tbl_pwd_id_verification&z_pwd_id_number=%3D&x_pwd_id_number=${value}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="mt-2 inline-block px-3 py-1 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700"
                                     >
-                                        Open Record
+                                        Check in DOH
                                     </a>
-                                )} */}
+                                )}
 
                             </div>
                         </div>

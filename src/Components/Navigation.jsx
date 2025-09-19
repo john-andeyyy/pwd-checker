@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Navigation() {
     return (
-        <header className="sticky top-0 left-0 w-full  bg-white shadow-md py-2 px-4 sm:px-6 flex items-center justify-between z-50 min-h-[10vh]">
+        <header className="sticky top-0 left-0 w-full  bg-white shadow-md  py-0.5 px-4 sm:px-6 flex items-center justify-between z-50 min-h-[10vh]">
             <div className="flex-shrink-0">
                 <img
                     src="/Images/CambaogPWD.png"
@@ -19,17 +19,17 @@ export default function Navigation() {
                 <img
                     src="/Images/Brgy_Cambaog.png"
                     alt="Brgy Logo"
-                    className="h-10 sm:h-12 md:h-15 object-cover rounded"
+                    className="h-10 sm:h-12 md:h-14 object-cover rounded"
                 />
                 <img
                     src="/Images/BustosLogo.png"
                     alt="Bustos Logo"
-                    className="h-11 sm:h-12 md:h-16 object-cover rounded"
+                    className="h-11 sm:h-12 md:h-14 object-cover rounded"
                 />
                 <img
                     src="/Images/Samaka.jpg"
                     alt="Samaka Logo"
-                    className="h-10 sm:h-12 md:h-16 object-cover rounded"
+                    className="h-10 sm:h-12 md:h-14 object-cover rounded"
                 />
             </div>
         </header>

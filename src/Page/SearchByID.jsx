@@ -129,7 +129,7 @@ export default function SearchByID() {
                                         <th className="px-4 py-2 text-left">PWD Number</th>
                                         <th className="px-4 py-2 text-left">Name</th>
                                         {/* <th className="px-4 py-2 text-left">Age</th> */}
-                                        <th className="px-4 py-2 text-left">Disability</th>
+                                        {/* <th className="px-4 py-2 text-left">Disability</th> */}
                                         <th className="px-4 py-2 text-left">Action</th>
                                     </tr>
                                 </thead>
@@ -142,14 +142,14 @@ export default function SearchByID() {
                                         {results.map((r) => (
                                             <tr
                                                 key={r.id}
-                                                className="odd:bg-white even:bg-gray-50"
+                                                className="odd:bg-white even:bg-gray-50 "
                                             >
                                                 <td className="px-4 py-2">{r.pwdNumber}</td>
                                                 <td className="px-4 py-2">
                                                     {r.last}, {r.first} {r.middle}
                                                 </td>
                                                 {/* <td className="px-4 py-2">{r.age}</td> */}
-                                                <td className="px-4 py-2">{r.disability}</td>
+                                                {/* <td className="px-4 py-2">{r.disability}</td> */}
                                                 <td className="px-4 py-2">
                                                     <button
                                                         onClick={() =>

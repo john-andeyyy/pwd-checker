@@ -7,6 +7,8 @@ import SearchByID from "./Page/SearchByID";
 import Navigation from "./Components/Navigation";
 import WelcomeLoader from "./Components/WelcomeLoader";
 import Officer from "./Page/Officer";
+import ApplicationGuide from "./Page/ApplicationGuide";
+import RenewGuide from "./Page/RenewGuide";
 
 const EXPIRE_DAYS = 1;
 
@@ -41,6 +43,8 @@ function App() {
             <Route path="/details/:id" element={<Details />} />
             <Route path="/SearchByID" element={<SearchByID />} />
             <Route path="/Officer" element={<Officer />} />
+            <Route path="/ApplicationGuide" element={<ApplicationGuide />} />
+            <Route path="/RenewGuide" element={<RenewGuide />} />
           </Routes>
         </main>
       </div>
