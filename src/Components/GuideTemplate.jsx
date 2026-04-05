@@ -1,4 +1,4 @@
-import { PageHero, SurfaceCard } from "./PageComponents";
+import { PageHero, StatusPanel, SurfaceCard } from "./PageComponents";
 
 function GuideColumn({ title, subtitle, accentClassName, steps }) {
   return (
@@ -36,6 +36,8 @@ export default function GuideTemplate({
   badge,
   title,
   description,
+  noticeTitle,
+  noticeDescription,
   tagalogTitle,
   englishTitle,
   tagalogSteps,
@@ -46,6 +48,14 @@ export default function GuideTemplate({
       <PageHero badge={badge} title={title} description={description}>
         {/* <BackButton /> */}
       </PageHero>
+
+      {noticeTitle ? (
+        <StatusPanel
+          tone="amber"
+          title={noticeTitle}
+          description={noticeDescription}
+        />
+      ) : null}
 
       <SurfaceCard>
         <div className="grid gap-8 lg:grid-cols-2">

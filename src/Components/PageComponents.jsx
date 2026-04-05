@@ -1,7 +1,11 @@
 import {
   ArrowLeft,
   BookOpenText,
-  FileText,
+  ChevronDown,
+  CircleHelp,
+  ClipboardList,
+  HeartPulse,
+  Info,
   Hash,
   Home,
   Menu,
@@ -16,9 +20,18 @@ const NAV_ITEMS = [
   { to: "/", label: "Home", end: true, icon: Home },
   { to: "/search-name", label: "Search by name", icon: Search },
   { to: "/search-id", label: "Search by PWD number", icon: Hash },
-  { to: "/application-guide", label: "PWD ID application guide", icon: FileText },
-  { to: "/renew-guide", label: "PWD ID renewal guide", icon: BookOpenText },
+  {
+    to: "/info",
+    label: "Information",
+    icon: CircleHelp,
+    children: [
+      { to: "/application-guide", label: "Application guide", icon: Info },
+      { to: "/renew-guide", label: "Renewal guide", icon: BookOpenText },
+      { to: "/info/philhealth", label: "PhilHealth", icon: HeartPulse },
+    ],
+  },
   { to: "/officer", label: "Officers", icon: Users },
+  { to: "/masterlist", label: "Masterlist", icon: ClipboardList },
 ];
 
 const surfaceClassName =
@@ -26,11 +39,22 @@ const surfaceClassName =
 
 export function AppShell({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [openGroups, setOpenGroups] = useState({ info: false });
   const location = useLocation();
 
   useEffect(() => {
     setIsSidebarOpen(false);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (location.pathname.startsWith("/info")) {
+      setOpenGroups((current) => ({ ...current, info: true }));
+    }
+  }, [location.pathname]);
+
+  const toggleGroup = (groupKey) => {
+    setOpenGroups((current) => ({ ...current, [groupKey]: !current[groupKey] }));
+  };
 
   return (
     <div className="min-h-screen bg-[linear-gradient(180deg,#f5fbff_0%,#eef7fb_48%,#f9fcfd_100%)] text-slate-900">
@@ -120,23 +144,80 @@ export function AppShell({ children }) {
 
         <nav aria-label="Primary" className="flex-1 overflow-y-auto px-4 py-4">
           <div className="space-y-2">
-            {NAV_ITEMS.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.end}
-                className={({ isActive }) =>
-                  `flex min-h-14 items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
-                    isActive
-                      ? "bg-sky-700 text-white shadow-sm"
-                      : "bg-slate-50 text-slate-700 hover:bg-sky-50 hover:text-sky-800"
-                  }`
-                }
-              >
-                <item.icon size={18} aria-hidden="true" className="shrink-0" />
-                {item.label}
-              </NavLink>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              if (item.children) {
+                const groupKey = item.label.toLowerCase();
+                const isOpen = Boolean(openGroups[groupKey]);
+                const isParentActive = item.children.some((child) =>
+                  location.pathname.startsWith(child.to),
+                );
+
+                return (
+                  <div key={item.to} className="space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => toggleGroup(groupKey)}
+                      className={`flex min-h-14 w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-semibold transition ${
+                        isParentActive
+                          ? "bg-sky-700 !text-white shadow-sm"
+                          : isOpen
+                            ? "bg-sky-50 text-sky-800"
+                          : "bg-slate-50 text-slate-700 hover:bg-sky-50 hover:text-sky-800"
+                      }`}
+                    >
+                      <item.icon size={18} aria-hidden="true" className="shrink-0" />
+                      <span className="flex-1">{item.label}</span>
+                      <ChevronDown
+                        size={18}
+                        aria-hidden="true"
+                        className={`shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                      />
+                    </button>
+
+                    {isOpen ? (
+                      <div className="space-y-2 pl-4">
+                        {item.children.map((child) => (
+                          <NavLink
+                            key={child.to}
+                            to={child.to}
+                            className={({ isActive }) =>
+                              `flex min-h-12 items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition ${
+                                isActive
+                                  ? "bg-sky-700 !text-white shadow-sm"
+                                  : "bg-slate-50 text-slate-700 hover:bg-sky-50 hover:text-sky-800"
+                              }`
+                            }
+                          >
+                            {child.icon ? (
+                              <child.icon size={16} aria-hidden="true" className="shrink-0" />
+                            ) : null}
+                            {child.label}
+                          </NavLink>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              }
+
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  end={item.end}
+                  className={({ isActive }) =>
+                    `flex min-h-14 items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
+                      isActive
+                        ? "bg-sky-700 !text-white shadow-sm"
+                        : "bg-slate-50 text-slate-700 hover:bg-sky-50 hover:text-sky-800"
+                    }`
+                  }
+                >
+                  <item.icon size={18} aria-hidden="true" className="shrink-0" />
+                  {item.label}
+                </NavLink>
+              );
+            })}
           </div>
         </nav>
 
@@ -147,7 +228,7 @@ export function AppShell({ children }) {
         </div>
       </aside>
 
-      <div className="flex w-full gap-6 py-4 pr-4 sm:pr-6 sm:pt-3">
+      <div className="flex w-full gap-6 px-4 py-4 sm:px-6 sm:pt-3">
         <aside className="sticky top-22 hidden h-[calc(100vh-6.5rem)] w-72 shrink-0 md:flex">
           <div className={`${surfaceClassName} flex w-full flex-col p-4`}>
             <div className="border-b border-sky-100 px-2 pb-4">
@@ -158,23 +239,80 @@ export function AppShell({ children }) {
             </div>
 
             <nav aria-label="Desktop primary" className="flex-1 space-y-2 px-2 py-4">
-              {NAV_ITEMS.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  end={item.end}
-                  className={({ isActive }) =>
-                    `flex min-h-14 items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
-                      isActive
-                        ? "bg-sky-700 text-white shadow-sm"
-                        : "bg-slate-50 text-slate-700 hover:bg-sky-50 hover:text-sky-800"
-                    }`
-                  }
-                >
-                  <item.icon size={18} aria-hidden="true" className="shrink-0" />
-                  {item.label}
-                </NavLink>
-              ))}
+              {NAV_ITEMS.map((item) => {
+                if (item.children) {
+                  const groupKey = item.label.toLowerCase();
+                  const isOpen = Boolean(openGroups[groupKey]);
+                  const isParentActive = item.children.some((child) =>
+                    location.pathname.startsWith(child.to),
+                  );
+
+                  return (
+                    <div key={item.to} className="space-y-2">
+                      <button
+                        type="button"
+                        onClick={() => toggleGroup(groupKey)}
+                        className={`flex min-h-14 w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-semibold transition ${
+                          isParentActive
+                            ? "bg-sky-700 !text-white shadow-sm"
+                            : isOpen
+                              ? "bg-sky-50 text-sky-800"
+                            : "bg-slate-50 text-slate-700 hover:bg-sky-50 hover:text-sky-800"
+                        }`}
+                      >
+                        <item.icon size={18} aria-hidden="true" className="shrink-0" />
+                        <span className="flex-1">{item.label}</span>
+                        <ChevronDown
+                          size={18}
+                          aria-hidden="true"
+                          className={`shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                        />
+                      </button>
+
+                      {isOpen ? (
+                        <div className="space-y-2 pl-4">
+                          {item.children.map((child) => (
+                            <NavLink
+                              key={child.to}
+                              to={child.to}
+                              className={({ isActive }) =>
+                                `flex min-h-12 items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition ${
+                                  isActive
+                                    ? "bg-sky-700 !text-white shadow-sm"
+                                    : "bg-slate-50 text-slate-700 hover:bg-sky-50 hover:text-sky-800"
+                                }`
+                              }
+                            >
+                              {child.icon ? (
+                                <child.icon size={16} aria-hidden="true" className="shrink-0" />
+                              ) : null}
+                              {child.label}
+                            </NavLink>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
+                  );
+                }
+
+                return (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    end={item.end}
+                    className={({ isActive }) =>
+                      `flex min-h-14 items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
+                        isActive
+                          ? "bg-sky-700 !text-white shadow-sm"
+                          : "bg-slate-50 text-slate-700 hover:bg-sky-50 hover:text-sky-800"
+                      }`
+                    }
+                  >
+                    <item.icon size={18} aria-hidden="true" className="shrink-0" />
+                    {item.label}
+                  </NavLink>
+                );
+              })}
             </nav>
 
             <div className="border-t border-sky-100 px-2 pt-4">

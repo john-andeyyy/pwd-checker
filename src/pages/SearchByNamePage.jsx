@@ -64,6 +64,7 @@ export default function SearchByNamePage() {
       <SurfaceCard>
         <form
           className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]"
+          autoComplete="off"
           onSubmit={(event) => {
             event.preventDefault();
             handleSearch();
@@ -77,10 +78,14 @@ export default function SearchByNamePage() {
             <TextInput
               id="first-name"
               type="text"
+              name="search-first-name"
               value={firstQuery}
               onChange={(event) => setFirstQuery(event.target.value)}
               placeholder="Enter first name"
-              autoComplete="given-name"
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="none"
+              spellCheck={false}
             />
           </FormField>
 
@@ -92,10 +97,14 @@ export default function SearchByNamePage() {
             <TextInput
               id="last-name"
               type="text"
+              name="search-last-name"
               value={lastQuery}
               onChange={(event) => setLastQuery(event.target.value)}
               placeholder="Enter last name"
-              autoComplete="family-name"
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="none"
+              spellCheck={false}
             />
           </FormField>
 

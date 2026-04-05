@@ -52,6 +52,8 @@ export default function RenewalGuidePage() {
       badge="Renewal guide"
       title="PWD ID renewal requirements"
       description="Use this checklist before renewal so the visit is shorter and the documents are complete."
+      noticeTitle="Paalala para sa senior citizens"
+      noticeDescription="Ang mga senior citizen ay automatic na hindi na kasama sa PWD coverage para sa application o renewal. Dahil dito, hindi na sila maaaring mag-apply ng bagong PWD ID o mag-renew ng existing PWD ID."
       tagalogTitle="Paano mag-renew ng PWD ID"
       englishTitle="How to renew a PWD ID"
       tagalogSteps={tagalogSteps}

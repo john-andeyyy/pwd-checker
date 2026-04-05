@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import { AppShell } from "./components/PageComponents";
 import WelcomeLoader from "./components/WelcomeLoader";
 import ApplicationGuidePage from "./pages/ApplicationGuidePage";
 import HomePage from "./pages/HomePage";
+import MasterlistRegisterPage from "./pages/MasterlistRegisterPage";
 import OfficersPage from "./pages/OfficersPage";
+import PhilHealthInfoPage from "./pages/PhilHealthInfoPage";
 import RecordDetailsPage from "./pages/RecordDetailsPage";
 import RenewalGuidePage from "./pages/RenewalGuidePage";
 import SearchByIdPage from "./pages/SearchByIdPage";
@@ -51,6 +53,9 @@ function App() {
           <Route path="/ApplicationGuide" element={<ApplicationGuidePage />} />
           <Route path="/renew-guide" element={<RenewalGuidePage />} />
           <Route path="/RenewGuide" element={<RenewalGuidePage />} />
+          <Route path="/masterlist" element={<MasterlistRegisterPage />} />
+          <Route path="/info" element={<Navigate to="/info/philhealth" replace />} />
+          <Route path="/info/philhealth" element={<PhilHealthInfoPage />} />
         </Routes>
       </AppShell>
     </Router>
