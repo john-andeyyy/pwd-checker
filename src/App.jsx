@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { AppShell } from "./Components/PageComponents";
 import WelcomeLoader from "./Components/WelcomeLoader";
 import ApplicationGuidePage from "./pages/ApplicationGuidePage";
@@ -13,6 +13,24 @@ import SearchByIdPage from "./pages/SearchByIdPage";
 import SearchByNamePage from "./pages/SearchByNamePage";
 
 const EXPIRE_DAYS = 1;
+
+function ScrollToTop() {
+  const { key, pathname } = useLocation();
+
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [key, pathname]);
+
+  return null;
+}
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -40,6 +58,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <AppShell>
         <Routes>
           <Route path="/" element={<HomePage />} />
