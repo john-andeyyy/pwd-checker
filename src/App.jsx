@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { AppShell } from "./Components/PagePrimitives";
+import WelcomeLoader from "./Components/WelcomeLoader";
+import ApplicationGuide from "./Page/ApplicationGuide";
 import Details from "./Page/Details";
 import LandingPage from "./Page/LandingPage";
-import Search_name from "./Page/Search_name";
-import SearchByID from "./Page/SearchByID";
-import Navigation from "./Components/Navigation";
-import WelcomeLoader from "./Components/WelcomeLoader";
 import Officer from "./Page/Officer";
-import ApplicationGuide from "./Page/ApplicationGuide";
 import RenewGuide from "./Page/RenewGuide";
+import SearchByID from "./Page/SearchByID";
+import SearchName from "./Page/Search_name";
 
 const EXPIRE_DAYS = 1;
 
@@ -17,37 +17,42 @@ function App() {
 
   useEffect(() => {
     const visitedAt = localStorage.getItem("visitedAt");
-    const now = new Date().getTime();
+    const now = Date.now();
 
-    if (!visitedAt || now - parseInt(visitedAt) > EXPIRE_DAYS * 24 * 60 * 60 * 1000) {
+    if (!visitedAt || now - Number(visitedAt) > EXPIRE_DAYS * 24 * 60 * 60 * 1000) {
       setLoading(true);
-      const timer = setTimeout(() => {
+      const timer = window.setTimeout(() => {
         setLoading(false);
-        localStorage.setItem("visitedAt", now.toString());
-      }, 2500);
+        localStorage.setItem("visitedAt", String(now));
+      }, 1800);
 
-      return () => clearTimeout(timer);
+      return () => window.clearTimeout(timer);
     }
+
+    return undefined;
   }, []);
 
-  if (loading) return <WelcomeLoader />;
+  if (loading) {
+    return <WelcomeLoader />;
+  }
 
   return (
     <Router>
-      <div className="">
-        <Navigation />
-        <main className="">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/search-name" element={<Search_name />} />
-            <Route path="/details/:id" element={<Details />} />
-            <Route path="/SearchByID" element={<SearchByID />} />
-            <Route path="/Officer" element={<Officer />} />
-            <Route path="/ApplicationGuide" element={<ApplicationGuide />} />
-            <Route path="/RenewGuide" element={<RenewGuide />} />
-          </Routes>
-        </main>
-      </div>
+      <AppShell>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/search-name" element={<SearchName />} />
+          <Route path="/search-id" element={<SearchByID />} />
+          <Route path="/SearchByID" element={<SearchByID />} />
+          <Route path="/details/:id" element={<Details />} />
+          <Route path="/officer" element={<Officer />} />
+          <Route path="/Officer" element={<Officer />} />
+          <Route path="/application-guide" element={<ApplicationGuide />} />
+          <Route path="/ApplicationGuide" element={<ApplicationGuide />} />
+          <Route path="/renew-guide" element={<RenewGuide />} />
+          <Route path="/RenewGuide" element={<RenewGuide />} />
+        </Routes>
+      </AppShell>
     </Router>
   );
 }

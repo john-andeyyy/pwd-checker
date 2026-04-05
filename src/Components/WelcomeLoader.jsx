@@ -1,24 +1,23 @@
-
 export default function WelcomeLoader() {
-    return (
-        <div className="relative h-screen w-screen flex flex-col items-center justify-center bg-gradient-to-tr from-blue-500 via-indigo-600 to-purple-700 overflow-hidden px-4">
-            <div className="absolute top-10 left-5 w-24 sm:w-32 h-24 sm:h-32 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-10 right-5 w-32 sm:w-48 h-32 sm:h-48 bg-purple-300/20 rounded-full blur-3xl animate-pulse"></div>
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[linear-gradient(180deg,#e0f2fe_0%,#f8fafc_100%)] px-4">
+      <div className="w-full max-w-lg rounded-[32px] border border-white/70 bg-white/90 p-8 text-center shadow-[0_18px_48px_rgba(15,23,42,0.12)] backdrop-blur">
+        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-sky-700">
+          PWD Portal
+        </p>
+        <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">
+          Preparing a simple and readable experience
+        </h1>
+        <p className="mt-3 text-base leading-7 text-slate-600">
+          Loading registration records and accessibility-friendly tools.
+        </p>
 
-            <div className="relative z-10 bg-white/20 backdrop-blur-md rounded-3xl p-6 sm:p-10 shadow-xl text-center text-white max-w-md w-full">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
-                    Welcome to <span className="text-yellow-300">PWD Portal</span>
-                </h1>
-                <p className="text-lg mb-8 text-white/90 leading-relaxed">
-                    Checking your access and preparing your personalized experience.
-                </p>
-
-                <div className="flex justify-center space-x-3">
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full animate-bounce"></div>
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full animate-bounce delay-150"></div>
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full animate-bounce delay-300"></div>
-                </div>
-            </div>
+        <div className="mt-8 flex items-center justify-center gap-3" aria-hidden="true">
+          <span className="h-3.5 w-3.5 rounded-full bg-sky-700 animate-bounce" />
+          <span className="h-3.5 w-3.5 rounded-full bg-teal-600 [animation-delay:160ms] animate-bounce" />
+          <span className="h-3.5 w-3.5 rounded-full bg-amber-500 [animation-delay:320ms] animate-bounce" />
         </div>
-    );
+      </div>
+    </div>
+  );
 }

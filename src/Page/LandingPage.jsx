@@ -1,91 +1,159 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import Threads from "../Components/Threads";
+import { createElement } from "react";
+import {
+  ArrowRight,
+  HeartHandshake,
+  Info,
+  ScrollText,
+  ShieldCheck,
+  WalletCards,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import {
+  PageHero,
+  PrimaryButton,
+  SectionHeading,
+  SurfaceCard,
+} from "../Components/PagePrimitives";
+
+const rightsHighlights = [
+  {
+    title: "Pantay na paggalang at access",
+    description:
+      "Ang PWD ay may karapatan sa maayos na serbisyo, respeto, at mas madaling access sa mga pampubliko at pribadong lugar kung saan posible ang accommodation.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Diskuwento at tax exemption",
+    description:
+      "Maaaring makatanggap ng legally recognized discounts at VAT exemption sa mga kwalipikadong bilihin at serbisyo ayon sa umiiral na patakaran.",
+    icon: WalletCards,
+  },
+  {
+    title: "Suporta sa kalusugan at kabuhayan",
+    description:
+      "Kasama sa mga mahalagang benepisyo ang access sa gamot, checkup, assistive needs, at ilang livelihood or community support programs depende sa lokal na implementasyon.",
+    icon: HeartHandshake,
+  },
+];
+
+const infoCards = [
+  {
+    title: "Bakit mahalaga ang PWD ID?",
+    description:
+      "Ang PWD ID ang karaniwang gamit para ma-verify ang eligibility sa discounts, benefits, at local assistance. Dapat tama at updated ang impormasyon sa record.",
+    icon: Info,
+  },
+  {
+    title: "Anong ihahanda bago mag-apply o mag-renew?",
+    description:
+      "Ihanda ang basic personal information, medical o supporting documents kung kailangan, valid IDs, at iba pang hinihinging requirements ng barangay o munisipyo.",
+    icon: ScrollText,
+    ctaLabel: "View steps",
+    to: "/application-guide",
+  },
+];
 
 export default function LandingPage() {
-    const navigate = useNavigate();
+  return (
+    <div className="space-y-6">
+      <PageHero
+        badge="PWD rights and information"
+        title="PWD Portal"
+        description="Makikita rito ang mahahalagang impormasyon tungkol sa PWD rights, benepisyo, at mga gabay para sa application, renewal, at paghanap ng record."
+      >
+        <Link to="/application-guide">
+          <PrimaryButton>
+            View application guide
+            <ArrowRight className="ml-2" size={18} aria-hidden="true" />
+          </PrimaryButton>
+        </Link>
+        <Link to="/search-name">
+          <PrimaryButton tone="slate">Search records</PrimaryButton>
+        </Link>
+      </PageHero>
 
-    return (
-        <div
-            className="min-h-[90vh] relative flex flex-col items-center justify-center p-4 sm:p-6 overflow-hidden 
-            bg-gradient-to-r from-blue-200 to-cyan-200"
-        >
-            {/* Main Card */}
-            <div className="relative z-10 backdrop-blur-md bg-white/80 rounded-3xl p-6 sm:p-10 shadow-xl max-w-2xl w-full text-center flex flex-col">
-                {/* Header */}
-                <h1 className="text-3xl sm:text-4xl font-extrabold mb-4 text-gray-900">
-                    PWD <span className="text-blue-600">Registration Checker</span>
-                </h1>
-
-                <p className="text-gray-600 mb-2 text-sm sm:text-base md:text-lg leading-relaxed">
-                    Easily check if you are registered as a{" "}
-                    <span className="font-semibold">Person with Disability (PWD)</span> in{" "}
-                    <span className="font-semibold">Cambag, Bustos, Bulacan</span>.
-                </p>
-
-                {/* RECORD CHECKER SECTION */}
-                <div className="mb-4">
-                    <h2 className="text-lg font-semibold text-gray-800 mb-3">🔎 Record Checker</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md mx-auto">
-                        <button
-                            onClick={() => navigate("/search-name")}
-                            className="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md transition font-semibold focus:outline-none focus:ring-4 focus:ring-blue-300"
-                        >
-                            Find by Name
-                        </button>
-
-                        <button
-                            onClick={() => navigate("/SearchByID")}
-                            className="w-full px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl shadow-md transition font-semibold focus:outline-none focus:ring-4 focus:ring-green-300"
-                        >
-                            Find by ID
-                        </button>
-
-                        <button
-                            onClick={() => navigate("/Officer")}
-                            className="w-full px-4 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-md transition font-semibold focus:outline-none focus:ring-4 focus:ring-orange-300"
-                        >
-                            Officer
-                        </button>
-
-                        <a
-                            href="https://forms.gle/KXwjZj8VcfW9e5ck8"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full"
-                        >
-                            <button className="w-full px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl shadow-md transition font-semibold focus:outline-none focus:ring-4 focus:ring-purple-300">
-                                Register for the Barangay Masterlist
-                            </button>
-                        </a>
-                    </div>
-                </div>
-
-                {/* INFO GUIDES SECTION */}
-                <div>
-                    <h2 className="text-lg font-semibold text-gray-800 mb-3">ℹ️ Guides & Information</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md mx-auto">
-                        <button
-                            onClick={() => navigate("/ApplicationGuide")}
-                            className="w-full px-4 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-xl shadow-md transition font-semibold focus:outline-none focus:ring-4 focus:ring-pink-300"
-                        >
-                            PWD ID Application Guide
-                        </button>
-
-                        <button
-                            onClick={() => navigate("/RenewGuide")}
-                            className="w-full px-4 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl shadow-md transition font-semibold focus:outline-none focus:ring-4 focus:ring-teal-300"
-                        >
-                            PWD ID Renewal Guide
-                        </button>
-                    </div>
-                </div>
-
-                {/* Footer */}
-                <footer className="mt-8 text-gray-500 text-xs sm:text-sm border-t border-gray-200 pt-4">
-                    © {new Date().getFullYear()} PWD Portal. All rights reserved.
-                </footer>
-            </div>
+      <SurfaceCard>
+        <SectionHeading
+          title="Mahahalagang karapatan ng PWD"
+          description="Narito ang ilan sa mga pangunahing bagay na dapat alam ng PWD at ng kanilang pamilya o guardian."
+        />
+        <div className="grid gap-4 lg:grid-cols-3">
+          {rightsHighlights.map(({ title, description, icon: Icon }) => (
+            <article
+              key={title}
+              className="rounded-[28px] border border-sky-100 bg-sky-50/70 p-5"
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-sky-700 shadow-sm">
+                {createElement(Icon, { size: 22, "aria-hidden": "true" })}
+              </div>
+              <h2 className="mt-4 text-lg font-bold text-slate-950">{title}</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-600">{description}</p>
+            </article>
+          ))}
         </div>
-    );
+      </SurfaceCard>
+
+      <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+        <SurfaceCard>
+          <SectionHeading
+            title="Mga dapat tandaan"
+            description="Simple guide ito para mas madaling maintindihan kung paano makakatulong ang portal at PWD ID sa araw-araw."
+          />
+          <div className="grid gap-4 md:grid-cols-2">
+            {infoCards.map(({ title, description, icon: Icon, ctaLabel, to }) => (
+              <article
+                key={title}
+                className="rounded-[28px] border border-slate-200 bg-slate-50 p-5"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-slate-700 shadow-sm">
+                  {createElement(Icon, { size: 22, "aria-hidden": "true" })}
+                </div>
+                <h2 className="mt-4 text-lg font-bold text-slate-950">{title}</h2>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{description}</p>
+                {ctaLabel && to ? (
+                  <Link to={to} className="mt-4 inline-flex">
+                    <PrimaryButton className="min-h-10 rounded-xl px-4 py-2 text-sm">
+                      {ctaLabel}
+                      <ArrowRight className="ml-2" size={16} aria-hidden="true" />
+                    </PrimaryButton>
+                  </Link>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        </SurfaceCard>
+
+        <SurfaceCard className="bg-[linear-gradient(180deg,rgba(14,165,233,0.08),rgba(245,250,255,0.9))]">
+          <SectionHeading
+            title="Paano gamitin ang portal"
+            description="Piliin ang page depende sa kailangan mo."
+          />
+          <div className="space-y-3">
+            <div className="rounded-2xl border border-white/80 bg-white/80 p-4">
+              <p className="text-sm font-bold text-slate-950">Search pages</p>
+              <p className="mt-1 text-sm leading-6 text-slate-600">
+                Gamitin ito kung gusto mong hanapin ang isang existing PWD record gamit
+                ang pangalan o PWD number.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/80 bg-white/80 p-4">
+              <p className="text-sm font-bold text-slate-950">Application guide</p>
+              <p className="mt-1 text-sm leading-6 text-slate-600">
+                Basahin muna ito bago mag-apply para kumpleto ang requirements at hindi
+                sayang ang biyahe.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/80 bg-white/80 p-4">
+              <p className="text-sm font-bold text-slate-950">Renewal guide</p>
+              <p className="mt-1 text-sm leading-6 text-slate-600">
+                Dito makikita ang paalala kung paano i-update o i-renew ang PWD ID kapag
+                kailangan na.
+              </p>
+            </div>
+          </div>
+        </SurfaceCard>
+      </div>
+
+    </div>
+  );
 }

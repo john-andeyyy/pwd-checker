@@ -1,193 +1,105 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { FormField, PageHero, PrimaryButton, StatusPanel, SurfaceCard, TextInput } from "../Components/PagePrimitives";
+import SearchResults from "../Components/SearchResults";
+import usePwdRecords from "../hooks/usePwdRecords";
+
+function normalizePwdNumber(value) {
+  return value.replace(/-/g, "").trim();
+}
 
 export default function SearchByID() {
-    const SheetURL = import.meta.env.VITE_SheetURL;
-    const [data, setData] = useState([]);
-    const [query, setQuery] = useState("");
-    const [results, setResults] = useState([]);
-    const [searched, setSearched] = useState(false);
-    const navigate = useNavigate();
+  const { records, loading, error } = usePwdRecords();
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [searched, setSearched] = useState(false);
+  const [validationMessage, setValidationMessage] = useState("");
 
-    const formatDate = (value) => {
-        if (!value) return "No Record";
-        const match = /Date\((\d+),(\d+),(\d+)\)/.exec(value);
-        let d = match
-            ? new Date(parseInt(match[1]), parseInt(match[2]), parseInt(match[3]))
-            : new Date(value);
-        if (isNaN(d)) return value;
-        return new Intl.DateTimeFormat("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-        }).format(d);
-    };
+  const handleSearch = () => {
+    const normalizedQuery = normalizePwdNumber(query);
 
-    const getAge = (value) => {
-        if (!value) return "No Record";
-        const match = /Date\((\d+),(\d+),(\d+)\)/.exec(value);
-        let birthDate = match
-            ? new Date(parseInt(match[1]), parseInt(match[2]), parseInt(match[3]))
-            : new Date(value);
-        if (isNaN(birthDate)) return "No Record";
-        const today = new Date();
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
-        return age;
-    };
+    if (!normalizedQuery) {
+      setValidationMessage("Enter a PWD number before searching.");
+      setSearched(false);
+      return;
+    }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const url = SheetURL;
-            const res = await fetch(url);
-            const text = await res.text();
-            const json = JSON.parse(text.substr(47).slice(0, -2));
-
-            const rows = json.table.rows.map((r, i) => ({
-                id: i,
-                last: r.c[3]?.v || "No Record",
-                first: r.c[4]?.v || "No Record",
-                middle: r.c[5]?.v || "No Record",
-                address: r.c[6]?.v || "No Record",
-                birthday: formatDate(r.c[7]?.v),
-                age: getAge(r.c[7]?.v),
-                cellphone: r.c[9]?.v || "No Record",
-                disability: r.c[10]?.v || "No Record",
-                pwdNumber: r.c[11]?.v || "No Record",
-                dateIssued: formatDate(r.c[12]?.v),
-                bedridden: r.c[13]?.v || "No Record",
-                status: r.c[14]?.v || "No Record",
-                civilStatus: r.c[15]?.v || "No Record",
-                notes: r.c[16]?.v || "No Record",
-            }));
-
-            setData(rows);
-        };
-        fetchData();
-    }, []);
-
-    const handleSearch = () => {
-        const q = query.replace(/-/g, "").trim();
-        if (!q) {
-            alert("⚠️ Please enter a PWD number before searching.");
-            return;
-        }
-        setSearched(true);
-
-        const filtered = data.filter((row) => {
-            const cleanPwd = row.pwdNumber.replace(/-/g, "");
-            return cleanPwd.includes(q);
-        });
-
-        setResults(filtered);
-    };
-
-    return (
-        <div className="min-h-[90vh] bg-gradient-to-r from-blue-200 to-cyan-200 text-gray-900 p-4 flex flex-col items-center">
-            {/* Back Button */}
-            <div className="w-full max-w-3xl flex mb-4">
-                    <button
-                        onClick={() => navigate("/")}
-                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-xl font-medium shadow-md"
-                    >
-                        <ArrowLeft size={18} /> Back
-                    </button>
-                </div>
-
-            {/* Card */}
-            <div className="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-6">
-                <h1 className="text-2xl font-bold mb-4 text-center text-blue-700">
-                    Search by PWD Number
-                </h1>
-
-                {/* Search Bar */}
-                <div className="flex flex-col sm:flex-row gap-3 w-full">
-                    <input
-                        type="text"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Type PWD Number "
-                        className="flex-1 px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <button
-                        onClick={handleSearch}
-                        className="px-6 py-3 bg-blue-600 text-white hover:bg-blue-700 rounded-xl font-semibold shadow-md w-full sm:w-auto"
-                    >
-                        Search
-                    </button>
-                </div>
-
-                {/* Results */}
-                {searched && (
-                    <div className="w-full mt-6">
-                        <div className="overflow-x-auto border border-gray-200 rounded-xl">
-                            <table className="w-full text-sm sm:text-base">
-                                <thead className="bg-blue-100 sticky top-0 z-10">
-                                    <tr>
-                                        <th className="px-4 py-2 text-left">PWD Number</th>
-                                        <th className="px-4 py-2 text-left">Name</th>
-                                        {/* <th className="px-4 py-2 text-left">Age</th> */}
-                                        {/* <th className="px-4 py-2 text-left">Disability</th> */}
-                                        <th className="px-4 py-2 text-left">Action</th>
-                                    </tr>
-                                </thead>
-                            </table>
-
-                            {/* Scrollable tbody */}
-                            <div className="max-h-64 overflow-y-auto">
-                                <table className="w-full text-sm sm:text-base">
-                                    <tbody>
-                                        {results.map((r) => (
-                                            <tr
-                                                key={r.id}
-                                                className="odd:bg-white even:bg-gray-50 "
-                                            >
-                                                <td className="px-4 py-2">{r.pwdNumber}</td>
-                                                <td className="px-4 py-2">
-                                                    {r.last}, {r.first} {r.middle}
-                                                </td>
-                                                {/* <td className="px-4 py-2">{r.age}</td> */}
-                                                {/* <td className="px-4 py-2">{r.disability}</td> */}
-                                                <td className="px-4 py-2">
-                                                    <button
-                                                        onClick={() =>
-                                                            navigate(`/details/${r.id}`, {
-                                                                state: r,
-                                                            })
-                                                        }
-                                                        className="text-blue-600 hover:underline"
-                                                    >
-                                                        View Details
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                {/* No Results */}
-                {searched && results.length === 0 && (
-                    <div className="mt-6 text-center">
-                        <p className="text-red-500 font-medium text-lg">
-                            No results found
-                        </p>
-                        {/* <a
-                            href="https://forms.gle/KXwjZj8VcfW9e5ck8"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block mt-3 text-blue-600 hover:underline text-lg"
-                        >
-                            Do you want to register?
-                        </a> */}
-                    </div>
-                )}
-            </div>
-        </div>
+    setValidationMessage("");
+    setSearched(true);
+    setResults(
+      records.filter((record) =>
+        normalizePwdNumber(record.pwdNumber).includes(normalizedQuery),
+      ),
     );
+  };
+
+  return (
+    <div className="space-y-6">
+      <PageHero
+        badge="Search records"
+        title="Find a PWD record by card number"
+        description="Use the full PWD number when possible for the quickest and most accurate result."
+      >
+        {/* <BackButton to="/" /> */}
+      </PageHero>
+
+      <SurfaceCard>
+        <form
+          className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto]"
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleSearch();
+          }}
+        >
+          <FormField
+            label="PWD number"
+            htmlFor="pwd-number"
+            hint="Hyphens are optional."
+          >
+            <TextInput
+              id="pwd-number"
+              type="text"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Enter PWD number"
+              inputMode="numeric"
+            />
+          </FormField>
+
+          <div className="flex items-start lg:pt-[1.9rem]">
+            <PrimaryButton type="submit" className="min-h-10 justify-center px-5 py-2 text-sm">
+              Search record
+            </PrimaryButton>
+          </div>
+        </form>
+
+        <div className="mt-5 space-y-3">
+          {validationMessage ? (
+            <StatusPanel title={validationMessage} tone="amber" />
+          ) : null}
+          {loading ? (
+            <StatusPanel
+              title="Loading records"
+              description="Please wait while the portal reads the PWD registry."
+            />
+          ) : null}
+          {error ? <StatusPanel title={error} tone="rose" /> : null}
+        </div>
+      </SurfaceCard>
+
+      <SearchResults
+        searched={searched}
+        results={results}
+        summary={`${results.length} matching record${results.length === 1 ? "" : "s"} found`}
+        mobileTitle={(record) => record.pwdNumber}
+        columns={[
+          { key: "pwdNumber", label: "PWD number", render: (record) => record.pwdNumber },
+          {
+            key: "name",
+            label: "Name",
+            render: (record) => `${record.last}, ${record.first} ${record.middle}`,
+          },
+        ]}
+      />
+    </div>
+  );
 }
