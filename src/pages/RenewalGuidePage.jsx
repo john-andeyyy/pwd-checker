@@ -1,4 +1,4 @@
-import GuidePage from "../Components/GuidePage";
+import GuideTemplate from "../components/GuideTemplate";
 
 const tagalogSteps = [
   {
@@ -46,9 +46,9 @@ const englishSteps = [
   },
 ];
 
-export default function RenewGuide() {
+export default function RenewalGuidePage() {
   return (
-    <GuidePage
+    <GuideTemplate
       badge="Renewal guide"
       title="PWD ID renewal requirements"
       description="Use this checklist before renewal so the visit is shorter and the documents are complete."

@@ -1,4 +1,4 @@
-import { BackButton, PageHero, SurfaceCard } from "./PagePrimitives";
+import { PageHero, SurfaceCard } from "./PageComponents";
 
 function GuideColumn({ title, subtitle, accentClassName, steps }) {
   return (
@@ -32,7 +32,7 @@ function GuideColumn({ title, subtitle, accentClassName, steps }) {
   );
 }
 
-export default function GuidePage({
+export default function GuideTemplate({
   badge,
   title,
   description,

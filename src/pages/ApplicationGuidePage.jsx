@@ -1,4 +1,4 @@
-import GuidePage from "../Components/GuidePage";
+import GuideTemplate from "../components/GuideTemplate";
 
 const tagalogSteps = [
   {
@@ -44,9 +44,9 @@ const englishSteps = [
   },
 ];
 
-export default function ApplicationGuide() {
+export default function ApplicationGuidePage() {
   return (
-    <GuidePage
+    <GuideTemplate
       badge="Application guide"
       title="PWD ID application requirements"
       description="Read both versions below before visiting the office so the application process is easier and faster."

@@ -1,13 +1,20 @@
 import { useState } from "react";
-import { FormField, PageHero, PrimaryButton, StatusPanel, SurfaceCard, TextInput } from "../Components/PagePrimitives";
-import SearchResults from "../Components/SearchResults";
+import {
+  FormField,
+  PageHero,
+  PrimaryButton,
+  StatusPanel,
+  SurfaceCard,
+  TextInput,
+} from "../components/PageComponents";
+import RecordSearchResults from "../components/RecordSearchResults";
 import usePwdRecords from "../hooks/usePwdRecords";
 
 function normalizePwdNumber(value) {
   return value.replace(/-/g, "").trim();
 }
 
-export default function SearchByID() {
+export default function SearchByIdPage() {
   const { records, loading, error } = usePwdRecords();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -86,7 +93,7 @@ export default function SearchByID() {
         </div>
       </SurfaceCard>
 
-      <SearchResults
+      <RecordSearchResults
         searched={searched}
         results={results}
         summary={`${results.length} matching record${results.length === 1 ? "" : "s"} found`}

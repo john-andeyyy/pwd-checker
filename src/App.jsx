@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { AppShell } from "./Components/PagePrimitives";
-import WelcomeLoader from "./Components/WelcomeLoader";
-import ApplicationGuide from "./Page/ApplicationGuide";
-import Details from "./Page/Details";
-import LandingPage from "./Page/LandingPage";
-import Officer from "./Page/Officer";
-import RenewGuide from "./Page/RenewGuide";
-import SearchByID from "./Page/SearchByID";
-import SearchName from "./Page/Search_name";
+import { AppShell } from "./components/PageComponents";
+import WelcomeLoader from "./components/WelcomeLoader";
+import ApplicationGuidePage from "./pages/ApplicationGuidePage";
+import HomePage from "./pages/HomePage";
+import OfficersPage from "./pages/OfficersPage";
+import RecordDetailsPage from "./pages/RecordDetailsPage";
+import RenewalGuidePage from "./pages/RenewalGuidePage";
+import SearchByIdPage from "./pages/SearchByIdPage";
+import SearchByNamePage from "./pages/SearchByNamePage";
 
 const EXPIRE_DAYS = 1;
 
@@ -40,17 +40,17 @@ function App() {
     <Router>
       <AppShell>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/search-name" element={<SearchName />} />
-          <Route path="/search-id" element={<SearchByID />} />
-          <Route path="/SearchByID" element={<SearchByID />} />
-          <Route path="/details/:id" element={<Details />} />
-          <Route path="/officer" element={<Officer />} />
-          <Route path="/Officer" element={<Officer />} />
-          <Route path="/application-guide" element={<ApplicationGuide />} />
-          <Route path="/ApplicationGuide" element={<ApplicationGuide />} />
-          <Route path="/renew-guide" element={<RenewGuide />} />
-          <Route path="/RenewGuide" element={<RenewGuide />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/search-name" element={<SearchByNamePage />} />
+          <Route path="/search-id" element={<SearchByIdPage />} />
+          <Route path="/SearchByID" element={<SearchByIdPage />} />
+          <Route path="/details/:id" element={<RecordDetailsPage />} />
+          <Route path="/officer" element={<OfficersPage />} />
+          <Route path="/Officer" element={<OfficersPage />} />
+          <Route path="/application-guide" element={<ApplicationGuidePage />} />
+          <Route path="/ApplicationGuide" element={<ApplicationGuidePage />} />
+          <Route path="/renew-guide" element={<RenewalGuidePage />} />
+          <Route path="/RenewGuide" element={<RenewalGuidePage />} />
         </Routes>
       </AppShell>
     </Router>

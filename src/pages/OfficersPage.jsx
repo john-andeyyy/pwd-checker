@@ -1,4 +1,4 @@
-import { BackButton, PageHero, SurfaceCard } from "../Components/PagePrimitives";
+import { PageHero, SurfaceCard } from "../components/PageComponents";
 
 const officers = [
   { name: "John Andrei B. Nicolas", position: "President" },
@@ -11,7 +11,7 @@ const officers = [
   { name: "Kon. Anna Lalu", position: "Council" },
 ];
 
-export default function Officer() {
+export default function OfficersPage() {
   return (
     <div className="space-y-6">
       <PageHero
@@ -19,7 +19,6 @@ export default function Officer() {
         title="Meet the officers supporting the local PWD community"
         description="These are the current officers listed in the portal."
       >
-        {/*{/* <BackButton to="/" /> */} 
       </PageHero>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

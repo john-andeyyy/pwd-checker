@@ -13,7 +13,7 @@ import {
   PrimaryButton,
   SectionHeading,
   SurfaceCard,
-} from "../Components/PagePrimitives";
+} from "../components/PageComponents";
 
 const rightsHighlights = [
   {
@@ -53,7 +53,7 @@ const infoCards = [
   },
 ];
 
-export default function LandingPage() {
+export default function HomePage() {
   return (
     <div className="space-y-6">
       <PageHero

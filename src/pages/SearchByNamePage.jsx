@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { FormField, PageHero, PrimaryButton, StatusPanel, SurfaceCard, TextInput } from "../Components/PagePrimitives";
-import SearchResults from "../Components/SearchResults";
+import {
+  FormField,
+  PageHero,
+  PrimaryButton,
+  StatusPanel,
+  SurfaceCard,
+  TextInput,
+} from "../components/PageComponents";
+import RecordSearchResults from "../components/RecordSearchResults";
 import usePwdRecords from "../hooks/usePwdRecords";
 
 function matchesName(record, firstName, lastName) {
@@ -19,7 +26,7 @@ function matchesName(record, firstName, lastName) {
   );
 }
 
-export default function SearchName() {
+export default function SearchByNamePage() {
   const { records, loading, error } = usePwdRecords();
   const [firstQuery, setFirstQuery] = useState("");
   const [lastQuery, setLastQuery] = useState("");
@@ -113,7 +120,7 @@ export default function SearchName() {
         </div>
       </SurfaceCard>
 
-      <SearchResults
+      <RecordSearchResults
         searched={searched}
         results={results}
         summary={`${results.length} matching record${results.length === 1 ? "" : "s"} found`}

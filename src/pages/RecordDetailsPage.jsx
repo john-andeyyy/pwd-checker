@@ -18,7 +18,7 @@ import {
   SectionHeading,
   StatusPanel,
   SurfaceCard,
-} from "../Components/PagePrimitives";
+} from "../components/PageComponents";
 import usePwdRecords from "../hooks/usePwdRecords";
 import { getRecordName, hasRecordValue } from "../lib/pwdRecords";
 
@@ -57,7 +57,7 @@ function DetailCard({ icon: Icon, label, value }) {
   );
 }
 
-export default function Details() {
+export default function RecordDetailsPage() {
   const { state } = useLocation();
   const { id } = useParams();
   const { records, loading, error } = usePwdRecords();
@@ -83,9 +83,7 @@ export default function Details() {
           badge="Record details"
           title="Profile not available"
           description="The selected PWD record could not be found."
-        >
-          {/*{/* <BackButton to="/" /> */} */}
-        </PageHero>
+        />
         <StatusPanel
           tone="rose"
           title="No data available"

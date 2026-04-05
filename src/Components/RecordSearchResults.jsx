@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { SurfaceCard, StatusPanel } from "./PagePrimitives";
+import { SurfaceCard, StatusPanel } from "./PageComponents";
 
-export default function SearchResults({
+export default function RecordSearchResults({
   searched,
   results,
   columns,
