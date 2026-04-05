@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import packageInfo from "../../package.json";
 
 const NAV_ITEMS = [
   { to: "/", label: "Home", end: true, icon: Home },
@@ -33,6 +34,8 @@ const NAV_ITEMS = [
   { to: "/officer", label: "Officers", icon: Users },
   { to: "/masterlist", label: "Masterlist", icon: ClipboardList },
 ];
+
+const APP_VERSION = `v${packageInfo.version}`;
 
 const surfaceClassName =
   "rounded-[28px] border border-sky-100 bg-white/95 shadow-[0_18px_48px_rgba(15,23,42,0.08)] backdrop-blur";
@@ -225,6 +228,9 @@ export function AppShell({ children }) {
           <p className="text-center text-sm font-semibold uppercase tracking-[0.16em] text-slate-600">
             Barangay Cambaog PWD
           </p>
+          <p className="mt-1 text-center text-xs font-medium uppercase tracking-[0.16em] text-slate-400">
+            {APP_VERSION}
+          </p>
         </div>
       </aside>
 
@@ -318,6 +324,9 @@ export function AppShell({ children }) {
             <div className="border-t border-sky-100 px-2 pt-4">
               <p className="text-center text-sm font-semibold uppercase tracking-[0.16em] text-slate-600">
                 Barangay Cambaog PWD
+              </p>
+              <p className="mt-1 text-center text-xs font-medium uppercase tracking-[0.16em] text-slate-400">
+                {APP_VERSION}
               </p>
             </div>
           </div>
