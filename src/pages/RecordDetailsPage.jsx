@@ -18,7 +18,7 @@ import {
   SectionHeading,
   StatusPanel,
   SurfaceCard,
-} from "../components/PageComponents";
+} from "../Components/PageComponents";
 import usePwdRecords from "../hooks/usePwdRecords";
 import { getRecordName, hasRecordValue } from "../lib/pwdRecords";
 

@@ -1,4 +1,4 @@
-import GuideTemplate from "../components/GuideTemplate";
+import GuideTemplate from "../Components/GuideTemplate";
 
 const tagalogSteps = [
   {

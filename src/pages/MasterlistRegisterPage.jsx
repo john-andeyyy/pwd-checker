@@ -4,7 +4,7 @@ import {
   SectionHeading,
   StatusPanel,
   SurfaceCard,
-} from "../components/PageComponents";
+} from "../Components/PageComponents";
 
 const FORM_LINK = "https://forms.gle/2de2kSHcAj1VJEK87";
 

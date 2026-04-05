@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
-import { AppShell } from "./components/PageComponents";
-import WelcomeLoader from "./components/WelcomeLoader";
+import { AppShell } from "./Components/PageComponents";
+import WelcomeLoader from "./Components/WelcomeLoader";
 import ApplicationGuidePage from "./pages/ApplicationGuidePage";
 import HomePage from "./pages/HomePage";
 import MasterlistRegisterPage from "./pages/MasterlistRegisterPage";

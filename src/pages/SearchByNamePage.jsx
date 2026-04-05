@@ -6,8 +6,8 @@ import {
   StatusPanel,
   SurfaceCard,
   TextInput,
-} from "../components/PageComponents";
-import RecordSearchResults from "../components/RecordSearchResults";
+} from "../Components/PageComponents";
+import RecordSearchResults from "../Components/RecordSearchResults";
 import usePwdRecords from "../hooks/usePwdRecords";
 
 function matchesName(record, firstName, lastName) {

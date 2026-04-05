@@ -1,4 +1,4 @@
-import { PageHero, SurfaceCard } from "../components/PageComponents";
+import { PageHero, SurfaceCard } from "../Components/PageComponents";
 
 const officers = [
   { name: "John Andrei B. Nicolas", position: "President" },

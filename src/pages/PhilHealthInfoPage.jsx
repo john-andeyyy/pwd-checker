@@ -1,4 +1,4 @@
-import { PageHero, SectionHeading, SurfaceCard } from "../components/PageComponents";
+import { PageHero, SectionHeading, SurfaceCard } from "../Components/PageComponents";
 
 const accordionItems = [
   {

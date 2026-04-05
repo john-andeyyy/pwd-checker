@@ -13,7 +13,7 @@ import {
   PrimaryButton,
   SectionHeading,
   SurfaceCard,
-} from "../components/PageComponents";
+} from "../Components/PageComponents";
 
 const rightsHighlights = [
   {
