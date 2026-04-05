@@ -18,17 +18,12 @@ const accordionItems = [
   },
 ];
 
-function InfoAccordionItem({ title, content }) {
+function InfoCardItem({ title, content }) {
   return (
-    <details
-      open
-      className="group rounded-3xl border border-slate-200 bg-slate-50 p-5 open:border-sky-200 open:bg-sky-50/70"
-    >
-      <summary className="cursor-pointer list-none pr-8 text-base font-semibold text-slate-900">
-        {title}
-      </summary>
+    <article className="rounded-3xl border border-sky-200 bg-sky-50/70 p-5">
+      <h2 className="text-base font-semibold text-slate-900">{title}</h2>
       <p className="mt-3 text-sm leading-7 text-slate-700 sm:text-base">{content}</p>
-    </details>
+    </article>
   );
 }
 
@@ -49,7 +44,7 @@ export default function PhilHealthInfoPage() {
 
         <div className="space-y-4">
           {accordionItems.map((item) => (
-            <InfoAccordionItem
+            <InfoCardItem
               key={item.title}
               title={item.title}
               content={item.content}
